@@ -23,6 +23,18 @@ docker run -it \
     -v $HOME/.config/rclone:/root/.config/rclone \
     -v $HOME/gdrive:/root/gdrive \
     rclone-browser-runtime
+
+or from publihed package
+ docker run -it \
+    --name rclone-browser-container \
+    --restart unless-stopped \
+    -e DISPLAY=$DISPLAY \
+    -e REMOTE_PATH="drive:/sistema" \
+    -v /usr/bin/rclone:/usr/bin/rclone \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $HOME/.config/rclone:/root/.config/rclone \
+    -v $HOME/gdrive:/root/gdrive \
+    ghcr.io/gdeluca/rclone-browser-rumtime:1.0
     
 4- 
 change folder permissions: 
@@ -41,3 +53,4 @@ replication folder mounted at $HOME/gdrive will be created
 
 
 note:this is based on experimental rclone bisync
+
