@@ -4,12 +4,15 @@ docker images to handle google drive sync using rclone bisync on linux
 Steps:
 
 1- install and setup rclone on host
+
 $ rclone config
 
 2- build or use published image
+
 $ docker build -t rclone-browser-runtime .
 
 3- running docker container
+
 docker run -it \
     --name rclone-browser-container \
     --restart unless-stopped \
@@ -21,10 +24,18 @@ docker run -it \
     -v $HOME/gdrive:/root/gdrive \
     rclone-browser-runtime
     
-4- change folder permissions: sudo chown -R $(id -u):$(id -g) $HOME/gdrive
-browser : docker exec -it rclone-browser-container rclone-browser
-console: docker exec -it rclone-browser-container /bin/sh
-stop: docker stop rclone-browser-container
+4- 
+change folder permissions: 
+sudo chown -R $(id -u):$(id -g) $HOME/gdrive
+
+browser : 
+docker exec -it rclone-browser-container rclone-browser
+
+console: 
+docker exec -it rclone-browser-container /bin/sh
+
+stop: 
+docker stop rclone-browser-container
 
 replication folder mounted at $HOME/gdrive will be created
 
