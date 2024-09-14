@@ -12,7 +12,7 @@ $ rclone config
 $ docker build -t rclone-browser-runtime .
 
 3- running docker container
-
+<code>
 docker run -it \
     --name rclone-browser-container \
     --restart unless-stopped \
@@ -23,8 +23,11 @@ docker run -it \
     -v $HOME/.config/rclone:/root/.config/rclone \
     -v $HOME/gdrive:/root/gdrive \
     rclone-browser-runtime
+</code>
 
 or from publihed package
+
+<code>
  docker run -it \
     --name rclone-browser-container \
     --restart unless-stopped \
@@ -35,11 +38,11 @@ or from publihed package
     -v $HOME/.config/rclone:/root/.config/rclone \
     -v $HOME/gdrive:/root/gdrive \
     ghcr.io/gdeluca/rclone-browser-rumtime:1.0
-    
+    </code>
+
 4- 
 change folder permissions: 
-sudo chown -R $(id -u):$(id -g) $HOME/gdrive
-
+<code>sudo chown -R $(id -u):$(id -g) $HOME/gdrive</code>
 browser : 
 docker exec -it rclone-browser-container rclone-browser
 
