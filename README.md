@@ -1,59 +1,68 @@
 # rclone-docker-browser-cron
-docker images to handle google drive sync using rclone bisync on linux
+Docker container to handle google drive synchonization on linux using rclone, bisync and cron on linux
 
-Steps:
-
+Steps
 1- install and setup rclone on host
 
-$ rclone config
-
-2- build or use published image
-
-$ docker build -t rclone-browser-runtime .
-
-3- running docker container
 <code>
-docker run -it \
-    --name rclone-browser-container \
-    --restart unless-stopped \
-    -e DISPLAY=$DISPLAY \
-    -e REMOTE_PATH="drive:" \
-    -v /usr/bin/rclone:/usr/bin/rclone \
-    -v /tmp/.X11-unix:/tmp/.X11-unix \
-    -v $HOME/.config/rclone:/root/.config/rclone \
-    -v $HOME/gdrive:/root/gdrive \
-    rclone-browser-runtime
+rclone config
 </code>
 
-or from publihed package
+Option 1. Setup from published image:
 
 <code>
  docker run -it \
     --name rclone-browser-container \
     --restart unless-stopped \
     -e DISPLAY=$DISPLAY \
-    -e REMOTE_PATH="drive:/sistema" \
-    -v /usr/bin/rclone:/usr/bin/rclone \
+    -e REMOTE_PATH="drive:" \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $HOME/.config/rclone:/root/.config/rclone \
     -v $HOME/gdrive:/root/gdrive \
-    ghcr.io/gdeluca/rclone-browser-rumtime:1.0
-    </code>
+    ghcr.io/gdeluca/rclone-browser-runtime:1.0
+</code>
 
-4- 
+Option 2. Setup from sources:
+
+1- clone repo
+2-
+<code>
+docker build -t rclone-browser-runtime .
+</code>
+
+3- Running docker container
+<code>
+docker run -it \
+    --name rclone-browser-container \
+    --restart unless-stopped \
+    -e DISPLAY=$DISPLAY \
+    -e REMOTE_PATH="drive:" \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $HOME/.config/rclone:/root/.config/rclone \
+    -v $HOME/gdrive:/root/gdrive \
+    rclone-browser-runtime
+</code>
+ 
 change folder permissions: 
-<code>sudo chown -R $(id -u):$(id -g) $HOME/gdrive</code>
-browser : 
+
+<code>
+sudo chown -R $(id -u):$(id -g) $HOME/gdriveç
+</code>
+
+To run docker browser:
+<code>
 docker exec -it rclone-browser-container rclone-browser
+</code>
 
-console: 
+To run docker console: 
+<code>
 docker exec -it rclone-browser-container /bin/sh
+</code>
 
-stop: 
+To stop docker container: 
+<code>
 docker stop rclone-browser-container
+</code>
 
-replication folder mounted at $HOME/gdrive will be created
-
-
-note:this is based on experimental rclone bisync
+note that rclone bisync is still experimental
 

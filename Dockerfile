@@ -10,6 +10,14 @@ RUN apk update && \
     qt5-qtmultimedia-dev \
     qt5-qttools-dev
 
+# Install rclone in the container
+RUN wget https://downloads.rclone.org/rclone-current-linux-amd64.zip && \
+    unzip rclone-current-linux-amd64.zip && \
+    cd rclone-*-linux-amd64 && \
+    cp rclone /usr/bin/ && \
+    chmod +x /usr/bin/rclone && \
+    rm -rf ../rclone-current-linux-amd64.zip ../rclone-*-linux-amd64
+
 RUN wget -q https://github.com/kapitainsky/RcloneBrowser/archive/refs/heads/master.zip && \
     unzip master.zip && \
     mv RcloneBrowser-master /tmp/rclonebrowser && \
@@ -39,7 +47,8 @@ RUN apk update && \
     qt5-qtbase-x11 && \
     rm -rf /var/cache/apk/*
 
-# Copy the RcloneBrowser binary from the build stage
+COPY --from=build-rclone-browser /usr/bin/rclone /usr/bin/rclone
+RUN chmod +x /usr/bin/rclone
 COPY --from=build-rclone-browser /usr/bin/rclone-browser /usr/bin/rclone-browser
 RUN chmod +x /usr/bin/rclone-browser
 
