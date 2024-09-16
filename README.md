@@ -43,15 +43,15 @@ docker run -it \
     rclone-browser-runtime
 </code>
  
-change folder permissions: 
+change folder permissions on host: 
 
 <code>
-sudo chown -R $(id -u):$(id -g) $HOME/gdriveç
+sudo chown -R $(id -u):$(id -g) $HOME/gdrive
 </code>
 
 To run docker browser:
 <code>
-docker exec -it rclone-browser-container rclone-browser
+xhost +local:root && docker exec -it rclone-browser-container rclone-browser
 </code>
 
 To run docker console: 
@@ -61,7 +61,7 @@ docker exec -it rclone-browser-container /bin/sh
 
 To stop docker container: 
 <code>
-docker stop rclone-browser-container
+docker stop rclone-browser-container && docker rm rclone-browser-container
 </code>
 
 note that rclone bisync is still experimental
